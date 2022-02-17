@@ -1,0 +1,84 @@
+body {
+    background: #1F1D36;
+    font-family: "Pacifico", cursive;
+    color: #B8DFF0;
+}
+ 
+  #pomodoro-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  #pomodoro-clock {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  #pomodoro-clock-timer {
+    font-size: 3rem;
+  }
+  
+  #pomodoro-clock-actions {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 110px;
+  }
+  #pomodoro-clock-inputs {
+    margin-top: 20px;
+    display: none;
+    justify-content: space-around;
+    width: 200px;
+  }
+
+  #pomodoro-clock-actions button {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    background-color: #B8DFF0;
+    border: 8px solid #B8DFF0;
+    margin: 2px;
+  } 
+  .pomodoro-input {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    width: 20px;
+    margin-right: 10px;
+  }
+
+  .pomodoro-input label {
+    margin-left: 65px;
+    text-align: center;
+  }
+  
+  #pomodoro-clock-music{
+    justify-content: center;
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    width: 200px;
+  }
+
+  #pomodoro-clock-music button{
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    background-color: #B8DFF0;
+    border: 8px solid #B8DFF0;
+    margin: 2px;
+    flex-wrap: nowrap;
+  }
+
+  #pomodoro-clock-label{
+    margin-right: 10x;
+    margin-top: 20px;
+    width: 200px;
+    text-align: center;   
+  }
