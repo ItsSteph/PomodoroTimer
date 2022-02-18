@@ -8,6 +8,7 @@ const itemToHide = document.getElementById("pomodoro-clock-inputs");
 const stopButton = document.getElementById('pomodoro-stop')
 const playAudioButton = document.getElementById("play-audio");
 const pauseAudioButton = document.getElementById("pause-audio");
+const stopAudioButton = document.getElementById("stop-audio");
 const audio = new Audio("alarm.mp3");
 const studyAudio = new Audio("studymusic.mp3");
 let isClockRunning = false;
@@ -16,13 +17,10 @@ let currentTimeLeftSession = 1500;
 let breakSessionDuration = 300;
 let timeSpentInCurrentSession = 0;
 let type = 'Work';
-let currentTaskLabel = document.getElementById("pomodoro-clock-task");
 let updatedWorkSessionDuration;
 let updatedBreakSessionDuration;
 let workDurationInput = document.getElementById("input-work-duration");
 let breakDurationInput = document.getElementById("input-break-duration");
-workDurationInput.value = "25";
-breakDurationInput.value = "5";
 let isClockStopped = true;
 
 const progressBar = new ProgressBar.Circle("#pomodoro-timer", {
@@ -61,7 +59,7 @@ startButton.onclick = function () {
 
 //pause the timer
 pauseButton.onclick = function () {
-    if (isClockRunning === true){
+    while (isClockRunning === true){
         clearInterval(clockTimer);
         isClockRunning = false;
     }
@@ -98,10 +96,10 @@ const displayCurrentTimeLeftInSession = () => {
     let result = "";
     const seconds = secondsLeft % 60;
     const minutes = parseInt(secondsLeft / 60) % 60;
-    function addLeadingZeroes(time) {
-        return time < 10 ? `0${time}` : time;
-    }
-    result += `${addLeadingZeroes(minutes)}:${addLeadingZeroes(seconds)}`;
+    const minutesZero = ("0" + minutes).slice(-2);
+    const secondsZero = ("0" + seconds).slice(-2);
+    result += `${minutesZero}:${secondsZero}`;
+    //diplays the result in the progressbar text field
     progressBar.text.innerText = result.toString();
 };
 const stepDown = () => {
@@ -116,26 +114,24 @@ const stepDown = () => {
             currentTimeLeftSession = breakSessionDuration;
             type = 'Break';
             setUpdatedTimers()
-            currentTaskLabel.value = 'Break';
-            currentTaskLabel.disabled = true;
         } else{
             currentTimeLeftSession = workSessionDuration;
             type = 'Work'
             setUpdatedTimers()
-            if (currentTaskLabel.value === 'Break'){
-                currentTaskLabel.value = workSessionLabel;
-            }
-            currentTaskLabel.disabled = false;
         }
+        updateSession();
+    }
+    displayCurrentTimeLeftInSession()
+};
+
+const updateSession = () => {
     if(type === work){
         currentTimeLeftSession = breakSessionDuration
         type = 'Break'
     } else {
         currentTimeLeftSession = workSessionDuration
         type = 'Work'
-        }
     }
-    displayCurrentTimeLeftInSession()
 };
 
 const setUpdatedTimers = () => {
@@ -161,6 +157,11 @@ playAudioButton.onclick = function () {
 
 pauseAudioButton.onclick = function () {
     studyAudio.pause();
+};
+
+stopAudioButton.onclick = function () {
+    studyAudio.pause();
+    studyAudio.currentTime = 0;
 };
 });
 
