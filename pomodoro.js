@@ -23,6 +23,7 @@ let workDurationInput = document.getElementById("input-work-duration");
 let breakDurationInput = document.getElementById("input-break-duration");
 let isClockStopped = true;
 
+//Progressbar
 const progressBar = new ProgressBar.Circle("#pomodoro-timer", {
     strokeWidth: 10,
     text: {
@@ -31,6 +32,7 @@ const progressBar = new ProgressBar.Circle("#pomodoro-timer", {
     color: "#B8DFF0"
   });
 
+//Listens for userinput from the input tags in index.html
 workDurationInput.addEventListener("input", () => {
     updatedWorkSessionDuration = minuteToSeconds(workDurationInput.value)
 });
@@ -39,11 +41,13 @@ breakDurationInput.addEventListener("input", () => {
     updatedBreakSessionDuration = minuteToSeconds(breakDurationInput.value)
 });
 
+//Refresh the page
 function Refresh() {
     setTimeout("location.reload(true);");
     targetDiv.style.display = "none";
 };
 
+//Converts minutes into seconds
 const minuteToSeconds = (mins) => {
     return mins * 60
 };
@@ -91,6 +95,7 @@ settingsButton.onclick = function () {
     }
   };
 
+//Adds zeros to the time and display the current time in the progressbar
 const displayCurrentTimeLeftInSession = () => {
     const secondsLeft = currentTimeLeftSession;
     let result = "";
@@ -102,6 +107,8 @@ const displayCurrentTimeLeftInSession = () => {
     //diplays the result in the progressbar text field
     progressBar.text.innerText = result.toString();
 };
+
+//Checks the session time and updates the lables and timers depending on how much time is left/spent
 const stepDown = () => {
     if (currentTimeLeftSession > 0){
     //decrease time lef/ increase time spent
@@ -124,6 +131,7 @@ const stepDown = () => {
     displayCurrentTimeLeftInSession()
 };
 
+//Update the sessions
 const updateSession = () => {
     if(type === work){
         currentTimeLeftSession = breakSessionDuration
@@ -134,6 +142,7 @@ const updateSession = () => {
     }
 };
 
+//Updates the timers
 const setUpdatedTimers = () => {
     if(type === 'Work'){
         currentTimeLeftSession = updatedWorkSessionDuration ? updatedWorkSessionDuration : workSessionDuration
@@ -144,13 +153,14 @@ const setUpdatedTimers = () => {
     }
 };
 
+//Calculates the completion rate of the current session
 const calculateSessionProgress = () => {
-    // calculate the completion rate of this session
     const sessionDuration =
       type === "Work" ? workSessionDuration : breakSessionDuration;
     return (timeSpentInCurrentSession / sessionDuration) * 1;
 };
 
+//Plays, pauses and stops/resets the audio when button is clicked
 playAudioButton.onclick = function () {
     studyAudio.play();	 
 };
